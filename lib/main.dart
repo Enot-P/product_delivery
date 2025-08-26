@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tea_delivery/features/home/view/home_screen.dart';
+import 'package:tea_delivery/router/router.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,12 +10,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
+    final router = AppRouter();
+    return MaterialApp.router(
+      title: 'tea_shop',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const HomeScreen(),
+      routerConfig: router.config(),
     );
   }
 }

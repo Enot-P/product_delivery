@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:tea_delivery/router/router.dart';
 
 @RoutePage()
 class HomeScreen extends StatelessWidget {
@@ -7,19 +8,31 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('Hi'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-          ],
-        ),
-      ),
+    return AutoTabsRouter(
+      routes: const [
+        ProductsListRoute(),
+        HistoryRoute(),
+        ProfileRoute(),
+      ],
+      builder: (context, child) {
+        final tabsRouter = AutoTabsRouter.of(context);
+        return Scaffold(
+          body: child,
+          bottomNavigationBar: BottomNavigationBar(
+            currentIndex: tabsRouter.activeIndex,
+            onTap: (index) => _openPage(index, tabsRouter),
+            items: const [
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'),
+              BottomNavigationBarItem(icon: Icon(Icons.list), label: 'history'),
+              BottomNavigationBarItem(icon: Icon(Icons.people), label: 'Profile'),
+            ],
+          ),
+        );
+      },
     );
+  }
+
+  void _openPage(int index, TabsRouter tabsRouter) {
+    tabsRouter.setActiveIndex(index);
   }
 }
