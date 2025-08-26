@@ -27,13 +27,14 @@ class TeaCardWidget extends StatelessWidget {
             child: TextButton(
               onPressed: () {},
               child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
                     Icons.shopping_cart_outlined,
                     color: Colors.black,
                   ),
                   Text(
-                    'Добавить в корзину',
+                    'В корзину',
                     style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
@@ -127,4 +128,3 @@ class _ProductDescription extends StatelessWidget {
     );
   }
 }
-

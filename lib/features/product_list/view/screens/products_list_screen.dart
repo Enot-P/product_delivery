@@ -15,15 +15,15 @@ class ProductsListScreen extends StatelessWidget {
       create: (_) => ProductsListViewModel(),
       child: const Scaffold(
         body: Center(
-          child: _catalogProducts(),
+          child: _CatalogProducts(),
         ),
       ),
     );
   }
 }
 
-class _catalogProducts extends StatelessWidget {
-  const _catalogProducts({super.key});
+class _CatalogProducts extends StatelessWidget {
+  const _CatalogProducts({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +34,9 @@ class _catalogProducts extends StatelessWidget {
         child: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-            childAspectRatio: 0.63, // Соотношение ширины к высоте карточки
+            crossAxisSpacing: 5,
+            mainAxisSpacing: 5,
+            childAspectRatio: 0.60, // Соотношение ширины к высоте карточки
           ),
           itemCount: model.listTea.length, // Замените на реальное количество товаров
           itemBuilder: (context, index) {
