@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tea_delivery/app/domain/tea_entity.dart';
-import 'package:tea_delivery/resources/resources.dart';
 
 class TeaCardWidget extends StatelessWidget {
   const TeaCardWidget({super.key, required this.tea});
@@ -8,42 +7,25 @@ class TeaCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      elevation: 3,
+      child: Row(
         children: [
-          _ProductImage(image: tea.image),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            child: _ProductDescription(tea: tea),
-          ),
-          Container(
-            height: 1,
-            width: double.infinity,
-            color: Colors.black45,
-          ),
-          SizedBox(
-            width: double.infinity,
-            child: TextButton(
-              onPressed: () {},
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.shopping_cart_outlined,
-                    color: Colors.black,
-                  ),
-                  Text(
-                    'В корзину',
-                    style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
-              ),
+          _ProductImageWidget(image: tea.image),
+          const SizedBox(width: 10),
+          Expanded(
+            child: _ProductDescriptionWidget(
+              name: tea.name,
+              description: tea.description,
+              price: tea.price,
+              weight: tea.weight,
             ),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.add, color: Colors.black),
           ),
         ],
       ),
@@ -51,43 +33,18 @@ class TeaCardWidget extends StatelessWidget {
   }
 }
 
-class _ProductImage extends StatelessWidget {
-  const _ProductImage({
-    super.key,
-    required this.image,
+class _ProductDescriptionWidget extends StatelessWidget {
+  const _ProductDescriptionWidget({
+    required this.name,
+    required this.description,
+    required this.price,
+    this.weight,
   });
 
-  final String image;
-
-  @override
-  Widget build(BuildContext context) {
-    const double imageHeight = 150;
-    const double imageRadius = 15;
-    return ClipRRect(
-      borderRadius: const BorderRadiusGeometry.directional(
-        topStart: Radius.circular(imageRadius),
-        topEnd: Radius.circular(imageRadius),
-      ),
-      child: SizedBox(
-        width: double.infinity,
-        child: Image.asset(
-          image,
-          height: imageHeight,
-          fit: BoxFit.cover,
-          alignment: const Alignment(0, 0.5),
-        ),
-      ),
-    );
-  }
-}
-
-class _ProductDescription extends StatelessWidget {
-  const _ProductDescription({
-    super.key,
-    required this.tea,
-  });
-
-  final TeaEntity tea;
+  final String name;
+  final String description;
+  final int price;
+  final int? weight;
 
   @override
   Widget build(BuildContext context) {
@@ -95,36 +52,69 @@ class _ProductDescription extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          tea.name,
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+          name,
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.bold,
             fontSize: 16,
           ),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
-        const SizedBox(
-          height: 5,
+        const SizedBox(height: 4),
+        Text(
+          description,
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+            color: Colors.grey[600],
+            fontSize: 12,
+          ),
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
         ),
+        const SizedBox(height: 8),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              tea.weight,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Colors.grey[600],
-              ),
-            ),
-            Text(
-              '${tea.price.toString()}₽',
+              '$price ₽',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
-                color: Colors.green[700],
+                color: Colors.black,
               ),
             ),
+            if (weight != null)
+              Text(
+                ' $weight г',
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: Colors.grey[600],
+                  fontSize: 12,
+                ),
+              ),
           ],
         ),
       ],
+    );
+  }
+}
+
+class _ProductImageWidget extends StatelessWidget {
+  const _ProductImageWidget({
+    required this.image,
+  });
+
+  final String image;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(20),
+        bottomLeft: Radius.circular(20),
+      ),
+      child: Image.asset(
+        image,
+        width: 95,
+        // height: 80,
+        fit: BoxFit.cover,
+      ),
     );
   }
 }

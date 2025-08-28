@@ -45,9 +45,7 @@ class _AddToCartButton extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: () {
-          // Действие для кнопки
-        },
+        onPressed: () {},
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.green[600],
           foregroundColor: Colors.white,
@@ -166,23 +164,6 @@ class _HeaderDescriptionWidget extends StatelessWidget {
         Text(
           'Organic Lemons',
           style: Theme.of(context).textTheme.headlineSmall,
-        ),
-        const SizedBox(height: 8),
-
-        // Рейтинг
-        Row(
-          children: [
-            const Icon(Icons.star, color: Colors.amber, size: 16),
-            const Icon(Icons.star, color: Colors.amber, size: 16),
-            const Icon(Icons.star, color: Colors.amber, size: 16),
-            const Icon(Icons.star, color: Colors.amber, size: 16),
-            const Icon(Icons.star_half, color: Colors.amber, size: 16),
-            const SizedBox(width: 8),
-            Text(
-              '4.5 ★ (99 reviews)',
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
-          ],
         ),
         const SizedBox(height: 8),
 

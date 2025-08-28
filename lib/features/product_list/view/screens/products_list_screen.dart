@@ -31,19 +31,17 @@ class _CatalogProducts extends StatelessWidget {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 5,
-            mainAxisSpacing: 5,
-            childAspectRatio: 0.60, // Соотношение ширины к высоте карточки
-          ),
-          itemCount: model.listTea.length, // Замените на реальное количество товаров
+        child: ListView.builder(
+          padding: const EdgeInsets.only(top: 30),
+          itemCount: model.listTea.length,
           itemBuilder: (context, index) {
-            return InkWell(
-              onTap: () => context.router.push(const ProductDetailsRoute()),
-              child: TeaCardWidget(
-                tea: model.listTea[index],
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5),
+              child: InkWell(
+                onTap: () => context.router.push(const ProductDetailsRoute()),
+                child: TeaCardWidget(
+                  tea: model.listTea[index],
+                ),
               ),
             );
           },
