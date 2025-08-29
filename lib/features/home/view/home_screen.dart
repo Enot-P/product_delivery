@@ -11,7 +11,7 @@ class HomeScreen extends StatelessWidget {
     return AutoTabsRouter(
       routes: const [
         ProductsListRoute(),
-        HistoryRoute(),
+        CartRoute(),
         ProfileRoute(),
       ],
       builder: (context, child) {
@@ -22,9 +22,9 @@ class HomeScreen extends StatelessWidget {
             currentIndex: tabsRouter.activeIndex,
             onTap: (index) => _openPage(index, tabsRouter),
             items: const [
-              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'),
-              BottomNavigationBarItem(icon: Icon(Icons.list), label: 'history'),
-              BottomNavigationBarItem(icon: Icon(Icons.people), label: 'Profile'),
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Каталог'),
+              BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Корзина'),
+              BottomNavigationBarItem(icon: Icon(Icons.people), label: 'Профиль'),
             ],
           ),
         );

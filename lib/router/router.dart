@@ -23,8 +23,8 @@ class AppRouter extends RootStackRouter {
           path: 'product_list',
         ),
         AutoRoute(
-          page: HistoryRoute.page,
-          path: 'history',
+          page: CartRoute.page,
+          path: 'cart',
         ),
       ],
     ),

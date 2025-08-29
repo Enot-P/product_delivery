@@ -41,4 +41,24 @@ class TeaApiClient {
       ),
     ];
   }
+
+  // TODO: Переделать под локальное хранение
+  Future<List<TeaEntity>> getListTeasForCart() async {
+    return [
+      TeaEntity(
+        image: Images.teaExample,
+        name: 'Зелёный чай Сенча',
+        weight: 100,
+        price: 350,
+        description: 'Классический японский зелёный чай с освежающим вкусом и лёгкой травяной нотой.',
+      ),
+      TeaEntity(
+        image: Images.teaExample,
+        name: 'Чёрный чай Ассам',
+        weight: 200,
+        price: 500,
+        description: 'Индийский чёрный чай с насыщенным вкусом, нотками солода и пряностей.',
+      ),
+    ];
+  }
 }
