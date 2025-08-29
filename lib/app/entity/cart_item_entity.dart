@@ -8,4 +8,9 @@ class CartItemEntity {
     required this.product,
     required this.quantity,
   });
+
+  @override
+  String toString() {
+    return 'CartItemEntity(product: $product, quantity: $quantity)';
+  }
 }

@@ -1,9 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tea_delivery/app/entity/product.dart';
+import 'package:tea_delivery/features/product_list/domain/domain.dart';
 
-class TeaCardWidget extends StatelessWidget {
-  const TeaCardWidget({super.key, required this.tea});
-  final ProductEntity tea;
+class ProductCardWidget extends StatefulWidget {
+  const ProductCardWidget({super.key, required this.product});
+  final ProductEntity product;
+
+  @override
+  State<ProductCardWidget> createState() => _ProductCardWidgetState();
+}
+
+class _ProductCardWidgetState extends State<ProductCardWidget> {
+  // ignore: prefer_typing_uninitialized_variables, strict_top_level_inference
+  late final ProductsListViewModel model;
+  late final bool productInCart;
+  @override
+  void initState() {
+    super.initState();
+    model = context.read<ProductsListViewModel>();
+    productInCart = model.checkProductInCart(widget.product);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -13,20 +31,23 @@ class TeaCardWidget extends StatelessWidget {
       elevation: 3,
       child: Row(
         children: [
-          _ProductImageWidget(image: tea.image),
+          _ProductImageWidget(image: widget.product.image),
           const SizedBox(width: 10),
           Expanded(
             child: _ProductDescriptionWidget(
-              name: tea.name,
-              description: tea.description,
-              price: tea.price,
-              weight: tea.weight,
+              name: widget.product.name,
+              description: widget.product.description,
+              price: widget.product.price,
+              weight: widget.product.weight,
             ),
           ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.add, color: Colors.black),
-          ),
+
+          productInCart
+              ? _ChangeQuantity()
+              : IconButton(
+                  onPressed: () => model.addProductInCart(widget.product),
+                  icon: const Icon(Icons.add, color: Colors.black),
+                ),
         ],
       ),
     );
@@ -115,6 +136,42 @@ class _ProductImageWidget extends StatelessWidget {
         // height: 80,
         fit: BoxFit.cover,
       ),
+    );
+  }
+}
+
+class _ChangeQuantity extends StatefulWidget {
+  _ChangeQuantity({super.key});
+
+  @override
+  State<_ChangeQuantity> createState() => __ChangeQuantityState();
+}
+
+class __ChangeQuantityState extends State<_ChangeQuantity> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        IconButton(
+          onPressed: () {},
+          icon: const Icon(
+            Icons.add,
+          ),
+          padding: EdgeInsets.zero,
+        ),
+        Text(
+          '1',
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+        ),
+        IconButton(
+          onPressed: () {},
+          icon: const Icon(
+            Icons.remove,
+          ),
+          padding: EdgeInsets.zero,
+        ),
+      ],
     );
   }
 }

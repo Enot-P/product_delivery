@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tea_delivery/features/product_list/domain/domain.dart';
-import 'package:tea_delivery/features/product_list/view/widgets/tea_card_widget.dart';
+import 'package:tea_delivery/features/product_list/view/widgets/product_card_widget.dart';
 import 'package:tea_delivery/router/router.dart';
 
 @RoutePage()
@@ -39,8 +39,8 @@ class _CatalogProducts extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 5),
               child: InkWell(
                 onTap: () => context.router.push(const ProductDetailsRoute()),
-                child: TeaCardWidget(
-                  tea: model.listTea[index],
+                child: ProductCardWidget(
+                  product: model.listTea[index],
                 ),
               ),
             );

@@ -11,4 +11,9 @@ class ProductEntity {
     required this.price,
     required this.description,
   });
+
+  @override
+  String toString() {
+    return 'ProductEntity(image: $image, name: $name, weight: $weight, description: $description, price: $price)';
+  }
 }
