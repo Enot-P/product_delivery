@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tea_delivery/app/domain/tea_entity.dart';
+import 'package:tea_delivery/app/entity/product.dart';
 
 class TeaCardWidget extends StatelessWidget {
   const TeaCardWidget({super.key, required this.tea});
-  final TeaEntity tea;
+  final ProductEntity tea;
   @override
   Widget build(BuildContext context) {
     return Card(

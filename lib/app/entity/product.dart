@@ -1,10 +1,10 @@
-class TeaEntity {
+class ProductEntity {
   final String image;
   final String name;
   final int? weight;
   final String description;
   final int price;
-  TeaEntity({
+  ProductEntity({
     required this.image,
     required this.name,
     required this.weight,

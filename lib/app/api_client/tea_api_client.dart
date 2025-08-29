@@ -1,38 +1,38 @@
-import 'package:tea_delivery/app/domain/tea_entity.dart';
+import 'package:tea_delivery/app/entity/product.dart';
 import 'package:tea_delivery/resources/resources.dart';
 
 class TeaApiClient {
-  Future<List<TeaEntity>> getListTeas() async {
+  Future<List<ProductEntity>> getListTeas() async {
     return [
-      TeaEntity(
+      ProductEntity(
         image: Images.teaExample,
         name: 'Зелёный чай Сенча',
         weight: 100,
         price: 350,
         description: 'Классический японский зелёный чай с освежающим вкусом и лёгкой травяной нотой.',
       ),
-      TeaEntity(
+      ProductEntity(
         image: Images.teaExample,
         name: 'Чёрный чай Ассам',
         weight: 200,
         price: 500,
         description: 'Индийский чёрный чай с насыщенным вкусом, нотками солода и пряностей.',
       ),
-      TeaEntity(
+      ProductEntity(
         image: Images.teaExample,
         name: 'Улун Милк',
         weight: 150,
         price: 420,
         description: 'Полуферментированный улун с кремовым молочным ароматом и сладковатым послевкусием.',
       ),
-      TeaEntity(
+      ProductEntity(
         image: Images.teaExample,
         name: 'Ройбуш Ванильный',
         weight: 100,
         price: 300,
         description: 'Безкофеиновый ройбуш с добавлением ванили, идеален для вечернего чаепития.',
       ),
-      TeaEntity(
+      ProductEntity(
         image: Images.teaExample,
         name: 'Травяной чай Ромашка',
         weight: 50,
@@ -43,16 +43,16 @@ class TeaApiClient {
   }
 
   // TODO: Переделать под локальное хранение
-  Future<List<TeaEntity>> getListTeasForCart() async {
+  Future<List<ProductEntity>> getListTeasForCart() async {
     return [
-      TeaEntity(
+      ProductEntity(
         image: Images.teaExample,
         name: 'Зелёный чай Сенча',
         weight: 100,
         price: 350,
         description: 'Классический японский зелёный чай с освежающим вкусом и лёгкой травяной нотой.',
       ),
-      TeaEntity(
+      ProductEntity(
         image: Images.teaExample,
         name: 'Чёрный чай Ассам',
         weight: 200,

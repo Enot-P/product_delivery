@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:tea_delivery/app/api_client/api_client.dart';
-import 'package:tea_delivery/app/domain/domain.dart';
+import 'package:tea_delivery/app/entity/entity.dart';
 
 class ProductsListViewModel extends ChangeNotifier {
   final _apiClient = TeaApiClient();
 
-  List<TeaEntity> _listTea = [];
-  List<TeaEntity> get listTea => List<TeaEntity>.unmodifiable(_listTea);
+  List<ProductEntity> _listTea = [];
+  List<ProductEntity> get listTea => List<ProductEntity>.unmodifiable(_listTea);
 
   ProductsListViewModel() {
     setup();
