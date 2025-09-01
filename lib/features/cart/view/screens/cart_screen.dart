@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tea_delivery/features/cart/domain/cart_view_model.dart';
-import 'package:tea_delivery/features/product_list/view/widgets/product_card_widget.dart';
 
 @RoutePage()
 class CartScreen extends StatelessWidget {

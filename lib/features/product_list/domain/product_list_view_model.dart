@@ -5,7 +5,7 @@ import 'package:tea_delivery/app/repositories/cart_repository.dart';
 
 class ProductsListViewModel extends ChangeNotifier {
   final _apiClient = TeaApiClient();
-  CartRepository _cartRepository = CartRepository();
+  final CartRepository _cartRepository = CartRepository();
 
   List<ProductEntity> _listTea = [];
   List<ProductEntity> get listTea => List<ProductEntity>.unmodifiable(_listTea);

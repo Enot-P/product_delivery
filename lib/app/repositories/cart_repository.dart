@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:talker/talker.dart';
 import 'package:tea_delivery/app/entity/entity.dart';
 
@@ -10,14 +12,26 @@ class CartRepository {
     return _instance;
   }
 
-  List<CartItemEntity> _cartItems = [];
-  List<CartItemEntity> get cartItems => _cartItems;
+  final List<CartItemEntity> _cartItems = [];
+  List<CartItemEntity> get cartItems => List.unmodifiable(_cartItems);
+
+  final StreamController<List<CartItemEntity>> _streamController = StreamController<List<CartItemEntity>>();
+  Stream<List<CartItemEntity>> get cartItemsStream => _streamController.stream;
 
   // TODO: Найти решение получше, чтобы не пробегать по всему массиву каждый раз
-  void removeProductByProduct(ProductEntity product) => _cartItems.removeWhere((item) => item.product == product);
-  void removeProductByIndex(int index) => _cartItems.removeAt(index);
+  void removeProductByProduct(ProductEntity product) {
+    _cartItems.removeWhere((item) => item.product == product);
+    _streamController.add(_cartItems);
+  }
+
+  void removeProductByIndex(int index) {
+    _cartItems.removeAt(index);
+    // _streamController.add(_cartItems);
+  }
+
   void addProduct(ProductEntity product) {
     _cartItems.add(CartItemEntity(product: product, quantity: 1));
+    _streamController.add(cartItems);
     Talker().debug(_cartItems);
   }
 
@@ -26,8 +40,9 @@ class CartRepository {
   void increaseProductQuantity(ProductEntity product) {
     final indexProductInCart = _cartItems.indexWhere((item) => item.product == product);
 
-    if (indexProductInCart > 0) {
+    if (indexProductInCart >= 0) {
       _cartItems[indexProductInCart].quantity += 1;
+      _streamController.add(cartItems);
     } else {
       throw 'Товара нету в корзине';
     }
@@ -42,5 +57,6 @@ class CartRepository {
     } else {
       removeProductByIndex(indexProductInCart);
     }
+    _streamController.add(cartItems);
   }
 }
