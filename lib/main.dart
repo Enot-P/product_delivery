@@ -5,7 +5,7 @@ import 'package:tea_delivery/features/cart/domain/domain.dart';
 import 'package:tea_delivery/router/router.dart';
 
 void main() {
-  GetIt.I.registerLazySingleton(() => CartRepository());
+  GetIt.I.registerSingleton(CartRepository());
   GetIt.I.registerLazySingleton(() => CartViewModel());
   runApp(const MyApp());
 }

@@ -3,27 +3,14 @@ import 'package:provider/provider.dart';
 import 'package:tea_delivery/app/entity/product.dart';
 import 'package:tea_delivery/features/product_list/domain/domain.dart';
 
-class ProductCardWidget extends StatefulWidget {
-  const ProductCardWidget({super.key, required this.product});
+class ProductCardWidget extends StatelessWidget {
   final ProductEntity product;
-
-  @override
-  State<ProductCardWidget> createState() => _ProductCardWidgetState();
-}
-
-class _ProductCardWidgetState extends State<ProductCardWidget> {
-  // ignore: prefer_typing_uninitialized_variables, strict_top_level_inference
-  late final ProductsListViewModel model;
-  late final bool productInCart;
-  @override
-  void initState() {
-    super.initState();
-    model = context.read<ProductsListViewModel>();
-    productInCart = model.checkProductInCart(widget.product);
-  }
+  const ProductCardWidget({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
+    final model = context.read<ProductsListViewModel>();
+    final productInCart = model.checkProductInCart(product);
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
@@ -31,21 +18,21 @@ class _ProductCardWidgetState extends State<ProductCardWidget> {
       elevation: 3,
       child: Row(
         children: [
-          _ProductImageWidget(image: widget.product.image),
+          _ProductImageWidget(image: product.image),
           const SizedBox(width: 10),
           Expanded(
             child: _ProductDescriptionWidget(
-              name: widget.product.name,
-              description: widget.product.description,
-              price: widget.product.price,
-              weight: widget.product.weight,
+              name: product.name,
+              description: product.description,
+              price: product.price,
+              weight: product.weight,
             ),
           ),
 
           productInCart
-              ? _ChangeQuantity()
+              ? _ChangeQuantity(product: product)
               : IconButton(
-                  onPressed: () => model.addProductInCart(widget.product),
+                  onPressed: () => model.pressOnIncreaseProductButton(product),
                   icon: const Icon(Icons.add, color: Colors.black),
                 ),
         ],
@@ -140,33 +127,30 @@ class _ProductImageWidget extends StatelessWidget {
   }
 }
 
-class _ChangeQuantity extends StatefulWidget {
-  _ChangeQuantity({super.key});
+class _ChangeQuantity extends StatelessWidget {
+  final ProductEntity product;
+  const _ChangeQuantity({required this.product});
 
-  @override
-  State<_ChangeQuantity> createState() => __ChangeQuantityState();
-}
-
-class __ChangeQuantityState extends State<_ChangeQuantity> {
   @override
   Widget build(BuildContext context) {
-    final model = context.watch<ProductsListViewModel>();
+    final model = context.read<ProductsListViewModel>();
+    final productQuantity = model.getQuantityProduct(product);
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         IconButton(
-          onPressed: () {},
+          onPressed: () => model.pressOnIncreaseProductButton(product),
           icon: const Icon(
             Icons.add,
           ),
           padding: EdgeInsets.zero,
         ),
         Text(
-          '1',
+          '$productQuantity',
           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
         ),
         IconButton(
-          onPressed: () {},
+          onPressed: () => model.pressOnDecreaseProductButton(product),
           icon: const Icon(
             Icons.remove,
           ),

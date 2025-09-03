@@ -10,6 +10,13 @@ class CartRepository {
   final StreamController<List<CartItemEntity>> _streamController = StreamController<List<CartItemEntity>>();
   Stream<List<CartItemEntity>> get cartItemsStream => _streamController.stream;
 
+  int? getQuantityProduct(ProductEntity product) {
+    final indexProductInCart = getProductIndexInCart(product);
+    if (indexProductInCart == -1) return null;
+
+    return cartItems[indexProductInCart].quantity;
+  }
+
   void removeProductByProduct(ProductEntity product) {
     _cartItems.removeWhere((item) => item.product == product);
     _streamController.add(_cartItems);
@@ -25,21 +32,23 @@ class CartRepository {
     Talker().debug(_cartItems);
   }
 
-  bool checkProduct(ProductEntity product) => _cartItems.any((item) => item.product == product);
-
   void increaseProductQuantity(ProductEntity product) {
-    final indexProductInCart = _cartItems.indexWhere((item) => item.product == product);
+    final indexProductInCart = getProductIndexInCart(product);
 
-    if (indexProductInCart >= 0) {
-      _cartItems[indexProductInCart].quantity += 1;
-      _streamController.add(cartItems);
+    if (indexProductInCart == -1) {
+      addProduct(product);
     } else {
-      throw 'Товара нету в корзине';
+      if (indexProductInCart >= 0) {
+        _cartItems[indexProductInCart].quantity += 1;
+        _streamController.add(cartItems);
+      } else {
+        throw 'Товара нету в корзине';
+      }
     }
   }
 
   void decreaseProductQuantity(ProductEntity product) {
-    final indexProductInCart = _cartItems.indexWhere((item) => item.product == product);
+    final indexProductInCart = getProductIndexInCart(product);
     if (indexProductInCart == -1) throw 'Товара нету в корзине';
 
     if (_cartItems[indexProductInCart].quantity > 1) {
@@ -49,4 +58,7 @@ class CartRepository {
     }
     _streamController.add(cartItems);
   }
+
+  int getProductIndexInCart(ProductEntity product) => _cartItems.indexWhere((item) => item.product == product);
+  bool checkProductInCart(ProductEntity product) => _cartItems.any((item) => item.product == product);
 }

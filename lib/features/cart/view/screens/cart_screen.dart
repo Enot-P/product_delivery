@@ -42,7 +42,7 @@ class _CartProducts extends StatelessWidget {
 
 class CartItemWidget extends StatelessWidget {
   final CartItemEntity cartItem;
-  CartItemWidget({super.key, required this.cartItem});
+  const CartItemWidget({super.key, required this.cartItem});
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +63,7 @@ class CartItemWidget extends StatelessWidget {
               weight: cartItem.product.weight,
             ),
           ),
-          _ChangeQuantity(),
+          _ChangeQuantity(quantityProduct: cartItem.quantity),
         ],
       ),
     );
@@ -157,7 +157,8 @@ class _ProductImageWidget extends StatelessWidget {
 }
 
 class _ChangeQuantity extends StatefulWidget {
-  _ChangeQuantity({super.key});
+  int quantityProduct;
+  _ChangeQuantity({super.key, required this.quantityProduct});
 
   @override
   State<_ChangeQuantity> createState() => __ChangeQuantityState();
@@ -177,7 +178,7 @@ class __ChangeQuantityState extends State<_ChangeQuantity> {
           padding: EdgeInsets.zero,
         ),
         Text(
-          '1',
+          '${widget.quantityProduct}',
           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
         ),
         IconButton(

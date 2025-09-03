@@ -9,7 +9,7 @@ class CartViewModel extends ChangeNotifier {
   // List<CartItemEntity> _cartItems = [];
   final _cartRepository = GetIt.I<CartRepository>();
 
-  List<CartItemEntity> get cartItems => List<CartItemEntity>.unmodifiable(_cartRepository.cartItems);
+  List<CartItemEntity> get cartItems => _cartRepository.cartItems;
 
   late StreamSubscription<List<CartItemEntity>> _subscription;
 
