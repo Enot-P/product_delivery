@@ -28,8 +28,6 @@ class CartRepository {
 
   void addProduct(ProductEntity product) {
     _cartItems.add(CartItemEntity(product: product, quantity: 1));
-    _streamController.add(cartItems);
-    Talker().debug(_cartItems);
   }
 
   void increaseProductQuantity(ProductEntity product) {
@@ -40,11 +38,13 @@ class CartRepository {
     } else {
       if (indexProductInCart >= 0) {
         _cartItems[indexProductInCart].quantity += 1;
-        _streamController.add(cartItems);
       } else {
         throw 'Товара нету в корзине';
       }
     }
+
+    _streamController.add(cartItems);
+    Talker().debug(_cartItems);
   }
 
   void decreaseProductQuantity(ProductEntity product) {
@@ -57,6 +57,8 @@ class CartRepository {
       removeProductByIndex(indexProductInCart);
     }
     _streamController.add(cartItems);
+
+    Talker().debug(_cartItems);
   }
 
   int getProductIndexInCart(ProductEntity product) => _cartItems.indexWhere((item) => item.product == product);

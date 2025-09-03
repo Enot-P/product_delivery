@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tea_delivery/app/entity/product.dart';
+import 'package:tea_delivery/app/ui/widgets/widgets.dart';
 import 'package:tea_delivery/features/product_list/domain/domain.dart';
 
 class ProductCardWidget extends StatelessWidget {
@@ -30,7 +31,11 @@ class ProductCardWidget extends StatelessWidget {
           ),
 
           productInCart
-              ? _ChangeQuantity(product: product)
+              ? ChangeQuantity(
+                  pressOnIncreaseProductButton: () => model.pressOnIncreaseProductButton(product),
+                  pressOnDecreaseProductButton: () => model.pressOnDecreaseProductButton(product),
+                  productQuantity: model.getQuantityProduct(product),
+                )
               : IconButton(
                   onPressed: () => model.pressOnIncreaseProductButton(product),
                   icon: const Icon(Icons.add, color: Colors.black),
@@ -123,40 +128,6 @@ class _ProductImageWidget extends StatelessWidget {
         // height: 80,
         fit: BoxFit.cover,
       ),
-    );
-  }
-}
-
-class _ChangeQuantity extends StatelessWidget {
-  final ProductEntity product;
-  const _ChangeQuantity({required this.product});
-
-  @override
-  Widget build(BuildContext context) {
-    final model = context.read<ProductsListViewModel>();
-    final productQuantity = model.getQuantityProduct(product);
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        IconButton(
-          onPressed: () => model.pressOnIncreaseProductButton(product),
-          icon: const Icon(
-            Icons.add,
-          ),
-          padding: EdgeInsets.zero,
-        ),
-        Text(
-          '$productQuantity',
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-        ),
-        IconButton(
-          onPressed: () => model.pressOnDecreaseProductButton(product),
-          icon: const Icon(
-            Icons.remove,
-          ),
-          padding: EdgeInsets.zero,
-        ),
-      ],
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:tea_delivery/app/entity/entity.dart';
+import 'package:tea_delivery/app/ui/widgets/widgets.dart';
 import 'package:tea_delivery/features/cart/domain/cart_view_model.dart';
 
 @RoutePage()
@@ -34,7 +35,10 @@ class _CartProducts extends StatelessWidget {
       padding: const EdgeInsets.only(top: 30),
       itemCount: model.cartItems.length,
       itemBuilder: (context, index) {
-        return CartItemWidget(cartItem: model.cartItems[index]);
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 5.0),
+          child: CartItemWidget(cartItem: model.cartItems[index]),
+        );
       },
     );
   }
@@ -60,10 +64,15 @@ class CartItemWidget extends StatelessWidget {
               name: cartItem.product.name,
               description: cartItem.product.description,
               price: cartItem.product.price,
+              quantity: cartItem.quantity,
               weight: cartItem.product.weight,
             ),
           ),
-          _ChangeQuantity(quantityProduct: cartItem.quantity),
+          ChangeQuantity(
+            pressOnIncreaseProductButton: () {},
+            pressOnDecreaseProductButton: () {},
+            productQuantity: -1,
+          ),
         ],
       ),
     );
@@ -75,6 +84,7 @@ class _ProductDescriptionWidget extends StatelessWidget {
     required this.name,
     required this.description,
     required this.price,
+    required this.quantity,
     this.weight,
   });
 
@@ -82,6 +92,7 @@ class _ProductDescriptionWidget extends StatelessWidget {
   final String description;
   final int price;
   final int? weight;
+  final int quantity;
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +122,7 @@ class _ProductDescriptionWidget extends StatelessWidget {
         Row(
           children: [
             Text(
-              '$price ₽',
+              '${price * quantity} ₽',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
@@ -152,43 +163,6 @@ class _ProductImageWidget extends StatelessWidget {
         // height: 80,
         fit: BoxFit.cover,
       ),
-    );
-  }
-}
-
-class _ChangeQuantity extends StatefulWidget {
-  int quantityProduct;
-  _ChangeQuantity({super.key, required this.quantityProduct});
-
-  @override
-  State<_ChangeQuantity> createState() => __ChangeQuantityState();
-}
-
-class __ChangeQuantityState extends State<_ChangeQuantity> {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(
-            Icons.add,
-          ),
-          padding: EdgeInsets.zero,
-        ),
-        Text(
-          '${widget.quantityProduct}',
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-        ),
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(
-            Icons.remove,
-          ),
-          padding: EdgeInsets.zero,
-        ),
-      ],
     );
   }
 }
