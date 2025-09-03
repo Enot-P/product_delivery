@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:tea_delivery/app/api_client/api_client.dart';
 import 'package:tea_delivery/app/entity/entity.dart';
 import 'package:tea_delivery/app/repositories/cart_repository.dart';
 
 class ProductsListViewModel extends ChangeNotifier {
   final _apiClient = TeaApiClient();
-  final CartRepository _cartRepository = CartRepository();
+  final _cartRepository = GetIt.I<CartRepository>();
 
   List<ProductEntity> _listTea = [];
   List<ProductEntity> get listTea => List<ProductEntity>.unmodifiable(_listTea);

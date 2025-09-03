@@ -4,14 +4,6 @@ import 'package:talker/talker.dart';
 import 'package:tea_delivery/app/entity/entity.dart';
 
 class CartRepository {
-  CartRepository._();
-
-  static final CartRepository _instance = CartRepository._();
-
-  factory CartRepository() {
-    return _instance;
-  }
-
   final List<CartItemEntity> _cartItems = [];
   List<CartItemEntity> get cartItems => List.unmodifiable(_cartItems);
 
