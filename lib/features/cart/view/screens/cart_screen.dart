@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:tea_delivery/app/entity/entity.dart';
 import 'package:tea_delivery/features/cart/domain/cart_view_model.dart';
@@ -13,8 +14,8 @@ class CartScreen extends StatelessWidget {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: ChangeNotifierProvider(
-          create: (_) => CartViewModel(),
+        child: ChangeNotifierProvider.value(
+          value: GetIt.I<CartViewModel>(),
           child: const Scaffold(
             body: _CartProducts(),
           ),

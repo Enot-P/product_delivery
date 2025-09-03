@@ -10,7 +10,6 @@ class CartRepository {
   final StreamController<List<CartItemEntity>> _streamController = StreamController<List<CartItemEntity>>();
   Stream<List<CartItemEntity>> get cartItemsStream => _streamController.stream;
 
-  // TODO: Найти решение получше, чтобы не пробегать по всему массиву каждый раз
   void removeProductByProduct(ProductEntity product) {
     _cartItems.removeWhere((item) => item.product == product);
     _streamController.add(_cartItems);
@@ -18,7 +17,6 @@ class CartRepository {
 
   void removeProductByIndex(int index) {
     _cartItems.removeAt(index);
-    // _streamController.add(_cartItems);
   }
 
   void addProduct(ProductEntity product) {
