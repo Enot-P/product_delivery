@@ -28,19 +28,22 @@ class _CatalogProducts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = context.watch<ProductsListViewModel>();
+    if (model.isLoading) {
+      return const CircularProgressIndicator();
+    }
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: ListView.builder(
           padding: const EdgeInsets.only(top: 30),
-          itemCount: model.listTea.length,
+          itemCount: model.productList.length,
           itemBuilder: (context, index) {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 5),
               child: InkWell(
                 onTap: () => context.router.push(const ProductDetailsRoute()),
                 child: ProductCardWidget(
-                  product: model.listTea[index],
+                  product: model.productList[index],
                 ),
               ),
             );

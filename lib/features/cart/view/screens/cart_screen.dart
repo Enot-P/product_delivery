@@ -34,21 +34,16 @@ class _CartProducts extends StatelessWidget {
       padding: const EdgeInsets.only(top: 30),
       itemCount: model.cartItems.length,
       itemBuilder: (context, index) {
-        return CartItemWidget(CartItem: model.cartItems[index]);
+        return CartItemWidget(cartItem: model.cartItems[index]);
       },
     );
   }
 }
 
-class CartItemWidget extends StatefulWidget {
-  final CartItemEntity CartItem;
-  CartItemWidget({super.key, required this.CartItem});
+class CartItemWidget extends StatelessWidget {
+  final CartItemEntity cartItem;
+  CartItemWidget({super.key, required this.cartItem});
 
-  @override
-  State<CartItemWidget> createState() => _CartItemWidgetState();
-}
-
-class _CartItemWidgetState extends State<CartItemWidget> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -58,16 +53,17 @@ class _CartItemWidgetState extends State<CartItemWidget> {
       elevation: 3,
       child: Row(
         children: [
-          _ProductImageWidget(image: widget.CartItem.product.image),
+          _ProductImageWidget(image: cartItem.product.image),
           const SizedBox(width: 10),
           Expanded(
             child: _ProductDescriptionWidget(
-              name: widget.CartItem.product.name,
-              description: widget.CartItem.product.description,
-              price: widget.CartItem.product.price,
-              weight: widget.CartItem.product.weight,
+              name: cartItem.product.name,
+              description: cartItem.product.description,
+              price: cartItem.product.price,
+              weight: cartItem.product.weight,
             ),
           ),
+          _ChangeQuantity(),
         ],
       ),
     );

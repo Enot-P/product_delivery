@@ -150,6 +150,7 @@ class _ChangeQuantity extends StatefulWidget {
 class __ChangeQuantityState extends State<_ChangeQuantity> {
   @override
   Widget build(BuildContext context) {
+    final model = context.watch<ProductsListViewModel>();
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [

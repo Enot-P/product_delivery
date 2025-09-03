@@ -8,15 +8,22 @@ class ProductsListViewModel extends ChangeNotifier {
   final _apiClient = TeaApiClient();
   final _cartRepository = GetIt.I<CartRepository>();
 
-  List<ProductEntity> _listTea = [];
-  List<ProductEntity> get listTea => List<ProductEntity>.unmodifiable(_listTea);
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
+  List<ProductEntity> _productList = [];
+  List<ProductEntity> get productList => List<ProductEntity>.unmodifiable(_productList);
 
   ProductsListViewModel() {
     setup();
   }
 
   Future<void> setup() async {
-    _listTea = await _apiClient.getListTeas();
+    _isLoading = true;
+    await Future.delayed(const Duration(seconds: 2));
+    _productList = await _apiClient.getListTeas();
+
+    _isLoading = false;
     notifyListeners();
   }
 
