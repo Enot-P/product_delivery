@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:tea_delivery/features/product_list/domain/domain.dart';
 import 'package:tea_delivery/features/product_list/view/widgets/product_card_widget.dart';
@@ -11,8 +12,8 @@ class ProductsListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => ProductsListViewModel(),
+    return ChangeNotifierProvider.value(
+      value: GetIt.I<ProductsListViewModel>(),
       child: const Scaffold(
         body: Center(
           child: _CatalogProducts(),
@@ -23,7 +24,7 @@ class ProductsListScreen extends StatelessWidget {
 }
 
 class _CatalogProducts extends StatelessWidget {
-  const _CatalogProducts({super.key});
+  const _CatalogProducts();
 
   @override
   Widget build(BuildContext context) {
@@ -34,17 +35,20 @@ class _CatalogProducts extends StatelessWidget {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: ListView.builder(
+        child: GridView.builder(
           padding: const EdgeInsets.only(top: 30),
           itemCount: model.productList.length,
+          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: 200,
+            childAspectRatio: 0.58,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+          ),
           itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5),
-              child: InkWell(
-                onTap: () => context.router.push(const ProductDetailsRoute()),
-                child: ProductCardWidget(
-                  product: model.productList[index],
-                ),
+            return InkWell(
+              onTap: () => context.router.push(ProductDetailsRoute(id: index)),
+              child: ProductCardWidget(
+                product: model.productList[index],
               ),
             );
           },

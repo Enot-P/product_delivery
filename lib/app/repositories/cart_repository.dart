@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:talker/talker.dart';
 import 'package:tea_delivery/app/entity/entity.dart';
 
@@ -61,6 +62,7 @@ class CartRepository {
     Talker().debug(_cartItems);
   }
 
-  int getProductIndexInCart(ProductEntity product) => _cartItems.indexWhere((item) => item.product == product);
-  bool checkProductInCart(ProductEntity product) => _cartItems.any((item) => item.product == product);
+  int getProductIndexInCart(ProductEntity product) =>
+      _cartItems.indexWhere((item) => item.product.name == product.name);
+  bool checkProductInCart(ProductEntity product) => _cartItems.any((item) => item.product.name == product.name);
 }

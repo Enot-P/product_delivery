@@ -19,8 +19,8 @@ class ChangeQuantity extends StatefulWidget {
 class _ChangeQuantityState extends State<ChangeQuantity> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         IconButton(
           onPressed: widget.pressOnIncreaseProductButton,

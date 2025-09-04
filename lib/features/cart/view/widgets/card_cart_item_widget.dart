@@ -1,38 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tea_delivery/app/entity/product.dart';
+import 'package:tea_delivery/app/entity/entity.dart';
 import 'package:tea_delivery/app/ui/widgets/widgets.dart';
-import 'package:tea_delivery/features/product_list/domain/domain.dart';
+import 'package:tea_delivery/features/cart/domain/cart_view_model.dart';
 
-class ProductCardWidget extends StatelessWidget {
-  final ProductEntity product;
-  const ProductCardWidget({super.key, required this.product});
+class CartItemWidget extends StatelessWidget {
+  final CartItemEntity cartItem;
+  const CartItemWidget({super.key, required this.cartItem});
 
   @override
   Widget build(BuildContext context) {
+    final model = context.watch<CartViewModel>();
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
       elevation: 3,
-      child: Column(
+      child: Row(
         children: [
-          Expanded(
-            flex: 3,
-            child: _ProductImageWidget(image: product.image),
-          ),
+          _ProductImageWidget(image: cartItem.product.image),
           const SizedBox(width: 10),
           Expanded(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: _ProductDescriptionWidget(
-                name: product.name,
-                description: product.description,
-                price: product.price,
-                weight: product.weight,
-              ),
+            child: _ProductDescriptionWidget(
+              name: cartItem.product.name,
+              description: cartItem.product.description,
+              price: cartItem.product.price,
+              quantity: cartItem.quantity,
+              weight: cartItem.product.weight,
             ),
+          ),
+          ChangeQuantity(
+            pressOnIncreaseProductButton: () => model.pressOnIncreaseProductButton(cartItem.product),
+            pressOnDecreaseProductButton: () => model.pressOnDecreaseProductButton(cartItem.product),
+            productQuantity: model.getQuantityProduct(cartItem.product),
           ),
         ],
       ),
@@ -45,6 +45,7 @@ class _ProductDescriptionWidget extends StatelessWidget {
     required this.name,
     required this.description,
     required this.price,
+    required this.quantity,
     this.weight,
   });
 
@@ -52,22 +53,21 @@ class _ProductDescriptionWidget extends StatelessWidget {
   final String description;
   final int price;
   final int? weight;
+  final int quantity;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Center(
-          child: Text(
-            name,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
+        Text(
+          name,
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
           ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
         const SizedBox(height: 4),
         Text(
@@ -81,10 +81,9 @@ class _ProductDescriptionWidget extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '$price ₽',
+              '${price * quantity} ₽',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
@@ -115,11 +114,14 @@ class _ProductImageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(20),
+        bottomLeft: Radius.circular(20),
+      ),
       child: Image.asset(
         image,
-        height: double.infinity,
-        width: double.infinity,
+        width: 95,
+        // height: 80,
         fit: BoxFit.cover,
       ),
     );

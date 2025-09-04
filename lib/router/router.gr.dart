@@ -60,18 +60,53 @@ class HomeRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [ProductDetailsScreen]
-class ProductDetailsRoute extends PageRouteInfo<void> {
-  const ProductDetailsRoute({List<PageRouteInfo>? children})
-    : super(ProductDetailsRoute.name, initialChildren: children);
+class ProductDetailsRoute extends PageRouteInfo<ProductDetailsRouteArgs> {
+  ProductDetailsRoute({
+    Key? key,
+    required int id,
+    List<PageRouteInfo>? children,
+  }) : super(
+         ProductDetailsRoute.name,
+         args: ProductDetailsRouteArgs(key: key, id: id),
+         rawPathParams: {'id': id},
+         initialChildren: children,
+       );
 
   static const String name = 'ProductDetailsRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const ProductDetailsScreen();
+      final pathParams = data.inheritedPathParams;
+      final args = data.argsAs<ProductDetailsRouteArgs>(
+        orElse: () => ProductDetailsRouteArgs(id: pathParams.getInt('id')),
+      );
+      return ProductDetailsScreen(key: args.key, id: args.id);
     },
   );
+}
+
+class ProductDetailsRouteArgs {
+  const ProductDetailsRouteArgs({this.key, required this.id});
+
+  final Key? key;
+
+  final int id;
+
+  @override
+  String toString() {
+    return 'ProductDetailsRouteArgs{key: $key, id: $id}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! ProductDetailsRouteArgs) return false;
+    return key == other.key && id == other.id;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ id.hashCode;
 }
 
 /// generated route for

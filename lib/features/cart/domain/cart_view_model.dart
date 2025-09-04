@@ -1,24 +1,19 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
-import 'package:tea_delivery/app/entity/cart_item_entity.dart';
+import 'package:tea_delivery/app/entity/entity.dart';
 import 'package:tea_delivery/app/repositories/repositories.dart';
 
 class CartViewModel extends ChangeNotifier {
-  // List<CartItemEntity> _cartItems = [];
-  final _cartRepository = GetIt.I<CartRepository>();
-
-  List<CartItemEntity> get cartItems => _cartRepository.cartItems;
+  final CartRepository cartRepository;
 
   late StreamSubscription<List<CartItemEntity>> _subscription;
 
-  CartViewModel() {
+  CartViewModel({required this.cartRepository}) {
     setup();
   }
 
   void setup() {
-    _subscription = _cartRepository.cartItemsStream.listen((updateItems) => notifyListeners());
+    _subscription = cartRepository.cartItemsStream.listen((updateItems) => notifyListeners());
   }
 
   @override
@@ -26,4 +21,21 @@ class CartViewModel extends ChangeNotifier {
     _subscription.cancel();
     super.dispose();
   }
+
+  void pressOnIncreaseProductButton(ProductEntity product) {
+    cartRepository.increaseProductQuantity(product);
+    notifyListeners();
+  }
+
+  void pressOnDecreaseProductButton(ProductEntity product) {
+    cartRepository.decreaseProductQuantity(product);
+    notifyListeners();
+  }
+
+  int getQuantityProduct(ProductEntity product) {
+    // TODO: прорпаботать возможную ошибку
+    return cartRepository.getQuantityProduct(product) ?? -100;
+  }
+
+  List<CartItemEntity> getCartItems() => cartRepository.cartItems;
 }

@@ -27,16 +27,7 @@ class ProductsListViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void pressOnIncreaseProductButton(ProductEntity product) {
-    _cartRepository.increaseProductQuantity(product);
-    notifyListeners();
-  }
-
-  void pressOnDecreaseProductButton(ProductEntity product) {
-    _cartRepository.decreaseProductQuantity(product);
-    notifyListeners();
-  }
-
+  void addProductInCart(ProductEntity product) => _cartRepository.addProduct(product);
   bool checkProductInCart(ProductEntity product) => _cartRepository.checkProductInCart(product);
 
   int getQuantityProduct(ProductEntity product) {

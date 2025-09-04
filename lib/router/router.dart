@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
 import 'package:tea_delivery/features/features.dart';
 
 part 'router.gr.dart';
@@ -31,7 +32,7 @@ class AppRouter extends RootStackRouter {
 
     AutoRoute(
       page: ProductDetailsRoute.page,
-      path: '/product_details',
+      path: '/product_details/:id',
     ),
   ];
 }

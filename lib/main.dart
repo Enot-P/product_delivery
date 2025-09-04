@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:tea_delivery/app/repositories/cart_repository.dart';
 import 'package:tea_delivery/features/cart/domain/domain.dart';
+import 'package:tea_delivery/features/features.dart';
 import 'package:tea_delivery/router/router.dart';
 
 void main() {
-  GetIt.I.registerSingleton(CartRepository());
-  GetIt.I.registerLazySingleton(() => CartViewModel());
+  GetIt.I.registerLazySingleton(() => CartRepository());
+  GetIt.I.registerLazySingleton(() => CartViewModel(cartRepository: GetIt.I<CartRepository>()));
+
+  GetIt.I.registerSingleton(ProductsListViewModel());
+
   runApp(const MyApp());
 }
 
