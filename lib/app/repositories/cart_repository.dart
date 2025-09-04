@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:talker/talker.dart';
 import 'package:tea_delivery/app/entity/entity.dart';
 
@@ -8,8 +7,16 @@ class CartRepository {
   final List<CartItemEntity> _cartItems = [];
   List<CartItemEntity> get cartItems => List.unmodifiable(_cartItems);
 
+  int _finalPrice = 0;
+  int get finalPrice => getFinalPrice();
+
   final StreamController<List<CartItemEntity>> _streamController = StreamController<List<CartItemEntity>>();
   Stream<List<CartItemEntity>> get cartItemsStream => _streamController.stream;
+
+  int getFinalPrice() {
+    _finalPrice = cartItems.fold(0, (prevValue, cart) => prevValue + cart.product.price * cart.quantity);
+    return _finalPrice;
+  }
 
   int? getQuantityProduct(ProductEntity product) {
     final indexProductInCart = getProductIndexInCart(product);
@@ -21,10 +28,6 @@ class CartRepository {
   void removeProductByProduct(ProductEntity product) {
     _cartItems.removeWhere((item) => item.product == product);
     _streamController.add(_cartItems);
-  }
-
-  void removeProductByIndex(int index) {
-    _cartItems.removeAt(index);
   }
 
   void addProduct(ProductEntity product) {
@@ -55,7 +58,7 @@ class CartRepository {
     if (_cartItems[indexProductInCart].quantity > 1) {
       _cartItems[indexProductInCart].quantity -= 1;
     } else {
-      removeProductByIndex(indexProductInCart);
+      _cartItems.removeAt(indexProductInCart);
     }
     _streamController.add(cartItems);
 

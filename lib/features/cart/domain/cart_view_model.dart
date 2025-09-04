@@ -4,16 +4,18 @@ import 'package:tea_delivery/app/entity/entity.dart';
 import 'package:tea_delivery/app/repositories/repositories.dart';
 
 class CartViewModel extends ChangeNotifier {
-  final CartRepository cartRepository;
-
+  final CartRepository _cartRepository;
   late StreamSubscription<List<CartItemEntity>> _subscription;
 
-  CartViewModel({required this.cartRepository}) {
-    setup();
+  List<CartItemEntity> get cartItems => _cartRepository.cartItems;
+  int get finalPrice => _cartRepository.finalPrice;
+
+  CartViewModel({required CartRepository cartRepository}) : _cartRepository = cartRepository {
+    _setup();
   }
 
-  void setup() {
-    _subscription = cartRepository.cartItemsStream.listen((updateItems) => notifyListeners());
+  void _setup() {
+    _subscription = _cartRepository.cartItemsStream.listen((updateItems) => notifyListeners());
   }
 
   @override
@@ -23,19 +25,16 @@ class CartViewModel extends ChangeNotifier {
   }
 
   void pressOnIncreaseProductButton(ProductEntity product) {
-    cartRepository.increaseProductQuantity(product);
+    _cartRepository.increaseProductQuantity(product);
     notifyListeners();
   }
 
   void pressOnDecreaseProductButton(ProductEntity product) {
-    cartRepository.decreaseProductQuantity(product);
+    _cartRepository.decreaseProductQuantity(product);
     notifyListeners();
   }
 
   int getQuantityProduct(ProductEntity product) {
-    // TODO: прорпаботать возможную ошибку
-    return cartRepository.getQuantityProduct(product) ?? -100;
+    return _cartRepository.getQuantityProduct(product) ?? -100;
   }
-
-  List<CartItemEntity> getCartItems() => cartRepository.cartItems;
 }
