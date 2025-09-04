@@ -23,7 +23,7 @@ class HomeScreen extends StatelessWidget {
             onTap: (index) => _openPage(index, tabsRouter),
             items: const [
               BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Каталог'),
-              BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Корзина'),
+              BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Корзина'),
               BottomNavigationBarItem(icon: Icon(Icons.people), label: 'Профиль'),
             ],
           ),

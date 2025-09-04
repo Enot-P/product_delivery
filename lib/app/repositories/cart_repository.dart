@@ -8,12 +8,12 @@ class CartRepository {
   List<CartItemEntity> get cartItems => List.unmodifiable(_cartItems);
 
   int _finalPrice = 0;
-  int get finalPrice => getFinalPrice();
+  int get finalPrice => _getFinalPrice();
 
   final StreamController<List<CartItemEntity>> _streamController = StreamController<List<CartItemEntity>>();
   Stream<List<CartItemEntity>> get cartItemsStream => _streamController.stream;
 
-  int getFinalPrice() {
+  int _getFinalPrice() {
     _finalPrice = cartItems.fold(0, (prevValue, cart) => prevValue + cart.product.price * cart.quantity);
     return _finalPrice;
   }

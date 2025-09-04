@@ -32,31 +32,44 @@ class _CartProductsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cartItems = context.select<CartViewModel, List<CartItemEntity>>((cart) => cart.cartItems);
-    return Column(
-      children: [
-        Expanded(
-          child: ListView.builder(
-            padding: const EdgeInsets.only(top: 30),
-            itemCount: cartItems.length,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5.0),
-                child: CartItemWidget(cartItem: cartItems[index]),
-              );
-            },
-          ),
-        ),
-
-        const Row(
-          children: [
-            Expanded(
-              child: _FinalPriceWidget(),
+    return cartItems.isEmpty
+        ? const Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Товаров нет в корзине, добавте что-нибудь',
+                  style: TextStyle(fontSize: 16),
+                ),
+                Text(':)'),
+              ],
             ),
-            Expanded(flex: 2, child: _BuyButtonWidget()),
-          ],
-        ),
-      ],
-    );
+          )
+        : Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  padding: const EdgeInsets.only(top: 30),
+                  itemCount: cartItems.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 5.0),
+                      child: CartItemWidget(cartItem: cartItems[index]),
+                    );
+                  },
+                ),
+              ),
+
+              const Row(
+                children: [
+                  Expanded(
+                    child: _FinalPriceWidget(),
+                  ),
+                  Expanded(flex: 2, child: _BuyButtonWidget()),
+                ],
+              ),
+            ],
+          );
   }
 }
 
