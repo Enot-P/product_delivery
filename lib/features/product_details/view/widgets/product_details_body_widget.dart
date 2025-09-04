@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tea_delivery/app/entity/product.dart';
+import 'package:tea_delivery/app/ui/widgets/green_button_widget.dart';
 import 'package:tea_delivery/app/ui/widgets/widgets.dart';
 import 'package:tea_delivery/features/product_details/domain/product_details_view_model.dart';
 import 'package:tea_delivery/router/router.dart';
@@ -30,8 +31,7 @@ class ProductBodyDetailsWidget extends StatelessWidget {
             : Column(
                 children: [
                   _QuantityWidget(product: product),
-
-                  _GoToCartWidget(),
+                  const _GoToCartWidget(),
                 ],
               ),
       ],
@@ -44,24 +44,10 @@ class _GoToCartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: () => AutoRouter.of(context).popAndPush(const CartRoute()),
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.green[600],
-          foregroundColor: Colors.white,
-          padding: const EdgeInsets.symmetric(vertical: 12),
-        ),
-        child: const Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Перейти в козину'),
-            SizedBox(width: 8),
-            Icon(Icons.shopping_cart),
-          ],
-        ),
-      ),
+    return GreenButtonWidget(
+      onPressButton: () => AutoRouter.of(context).popAndPush(const CartRoute()),
+      text: 'Перейти в корзину',
+      icon: const Icon(Icons.shopping_cart),
     );
   }
 }
@@ -72,24 +58,10 @@ class _AddToCartButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = context.read<ProductDetailsViewModel>();
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: model.addProductInCart,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.green[600],
-          foregroundColor: Colors.white,
-          padding: const EdgeInsets.symmetric(vertical: 12),
-        ),
-        child: const Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Добавить в корзину'),
-            SizedBox(width: 8),
-            Icon(Icons.shopping_cart),
-          ],
-        ),
-      ),
+    return GreenButtonWidget(
+      onPressButton: model.addProductInCart,
+      text: 'Добавить продукт в корзину',
+      icon: null,
     );
   }
 }
