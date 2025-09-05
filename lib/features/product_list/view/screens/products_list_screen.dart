@@ -14,10 +14,33 @@ class ProductsListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
       value: GetIt.I<ProductsListViewModel>(),
-      child: const Scaffold(
-        body: Center(
-          child: _CatalogProducts(),
-        ),
+      child: const _ProductListScreen(),
+    );
+  }
+}
+
+class _ProductListScreen extends StatelessWidget {
+  const _ProductListScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final model = context.read<ProductsListViewModel>();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Список продуктов'),
+        centerTitle: true,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 10.0),
+            child: IconButton(
+              onPressed: () => model.logout(context),
+              icon: const Icon(Icons.exit_to_app),
+            ),
+          ),
+        ],
+      ),
+      body: const Center(
+        child: _CatalogProducts(),
       ),
     );
   }

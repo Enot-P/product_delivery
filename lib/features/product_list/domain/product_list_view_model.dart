@@ -1,12 +1,15 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:tea_delivery/app/api_client/api_client.dart';
 import 'package:tea_delivery/app/entity/entity.dart';
-import 'package:tea_delivery/app/repositories/cart_repository.dart';
+import 'package:tea_delivery/app/repositories/repositories.dart';
+import 'package:tea_delivery/router/router.dart';
 
 class ProductsListViewModel extends ChangeNotifier {
   final _apiClient = TeaApiClient();
   final _cartRepository = GetIt.I<CartRepository>();
+  final _authRepository = GetIt.I<AuthRepository>();
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -33,5 +36,16 @@ class ProductsListViewModel extends ChangeNotifier {
   int getQuantityProduct(ProductEntity product) {
     // TODO: прорпаботать возможную ошибку
     return _cartRepository.getQuantityProduct(product) ?? -100;
+  }
+
+  void logout(BuildContext context) {
+    _authRepository.deleteSessionToken();
+
+    AutoRouter.of(context).pushAndPopUntil(AuthRoute(), predicate: (_) => false);
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   if (context.mounted) {
+    //     AutoRouter.of(context).pushAndPopUntil(AuthRoute(), predicate: (_) => false);
+    //   }
+    // });
   }
 }

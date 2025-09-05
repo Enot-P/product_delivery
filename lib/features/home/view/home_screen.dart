@@ -12,7 +12,6 @@ class HomeScreen extends StatelessWidget {
       routes: const [
         ProductsListRoute(),
         CartRoute(),
-        ProfileRoute(),
       ],
       builder: (context, child) {
         final tabsRouter = AutoTabsRouter.of(context);
@@ -24,7 +23,6 @@ class HomeScreen extends StatelessWidget {
             items: const [
               BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Каталог'),
               BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Корзина'),
-              BottomNavigationBarItem(icon: Icon(Icons.people), label: 'Профиль'),
             ],
           ),
         );

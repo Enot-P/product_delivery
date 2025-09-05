@@ -11,6 +11,50 @@
 part of 'router.dart';
 
 /// generated route for
+/// [AuthScreen]
+class AuthRoute extends PageRouteInfo<AuthRouteArgs> {
+  AuthRoute({Key? key, List<PageRouteInfo>? children})
+    : super(
+        AuthRoute.name,
+        args: AuthRouteArgs(key: key),
+        initialChildren: children,
+      );
+
+  static const String name = 'AuthRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<AuthRouteArgs>(
+        orElse: () => const AuthRouteArgs(),
+      );
+      return AuthScreen(key: args.key);
+    },
+  );
+}
+
+class AuthRouteArgs {
+  const AuthRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'AuthRouteArgs{key: $key}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! AuthRouteArgs) return false;
+    return key == other.key;
+  }
+
+  @override
+  int get hashCode => key.hashCode;
+}
+
+/// generated route for
 /// [CartScreen]
 class CartRoute extends PageRouteInfo<void> {
   const CartRoute({List<PageRouteInfo>? children})
@@ -121,22 +165,6 @@ class ProductsListRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const ProductsListScreen();
-    },
-  );
-}
-
-/// generated route for
-/// [ProfileScreen]
-class ProfileRoute extends PageRouteInfo<void> {
-  const ProfileRoute({List<PageRouteInfo>? children})
-    : super(ProfileRoute.name, initialChildren: children);
-
-  static const String name = 'ProfileRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      return const ProfileScreen();
     },
   );
 }

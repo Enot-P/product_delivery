@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:tea_delivery/features/features.dart';
+import 'package:tea_delivery/router/auth_guard.dart';
 
 part 'router.gr.dart';
 
@@ -12,13 +13,15 @@ class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => [
     AutoRoute(
-      page: HomeRoute.page,
+      page: AuthRoute.page,
       path: '/',
+      guards: [AuthGuard()],
+    ),
+
+    AutoRoute(
+      page: HomeRoute.page,
+      path: '/home',
       children: [
-        AutoRoute(
-          page: ProfileRoute.page,
-          path: 'profile',
-        ),
         AutoRoute(
           page: ProductsListRoute.page,
           path: 'product_list',
